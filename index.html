@@ -2,117 +2,43 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>受保护的彩色网页</title>
+    <title>验证身份</title>
     <style>
-        /* 基础样式：全屏渐变动画 */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 登录框样式 */
-        #login-container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            z-index: 10;
-        }
-
-        input {
-            padding: 10px;
-            width: 200px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: #e73c7e;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover { background: #ee7752; }
-
-        /* 隐藏的内容区域 */
-        #protected-content {
-            display: none;
-            color: white;
-            text-align: center;
-        }
-
-        .rainbow-text {
-            font-size: 3rem;
-            font-weight: bold;
-            background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: rainbow 5s linear infinite;
-        }
-
-        @keyframes rainbow {
-            to { background-position: 200% center; }
-        }
+        body { background: #1a1a1a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { text-align: center; background: #333; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        input { padding: 12px; border: none; border-radius: 4px; width: 200px; margin-bottom: 20px; }
+        button { padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
     </style>
 </head>
 <body>
-
-    <!-- 登录界面 -->
-    <div id="login-container">
-        <h2>🔒 私人页面</h2>
-        <p>请输入密码以解锁彩色世界</p>
-        <input type="password" id="passwordInput" placeholder="输入密码...">
+    <div class="box">
+        <h2>请输入访问密码</h2>
+        <input type="password" id="pw" placeholder="在此输入密码...">
         <br>
-        <button onclick="checkPassword()">解锁</button>
-    </div>
-
-    <!-- 验证成功后显示的内容 -->
-    <div id="protected-content">
-        <h1 class="rainbow-text">欢迎来到彩色世界！</h1>
-        <p style="font-size: 1.2rem;">恭喜你，密码正确。这是一个充满动感的彩色网页。</p>
+        <button onclick="verify()">进入网页</button>
     </div>
 
     <script>
-        function checkPassword() {
-            const pass = document.getElementById('passwordInput').value;
-            // 此处设置你的密码，例如: 123456
-            if (pass === "123456") {
-                document.getElementById('login-container').style.display = 'none';
-                document.getElementById('protected-content').style.display = 'block';
-                document.body.style.overflow = 'auto';
+        function verify() {
+            const pw = document.getElementById('pw').value;
+            
+            /* 
+             * 逻辑说明：
+             * 这里为了不暴露明文，你可以设置一个简单的判断。
+             * 比如密码是 "open666"，正确就跳转。
+             */
+            if (pw === "这里改成你的密码") {
+                // 这里填入你想打开的那个【目标网页】的完整网址
+                window.location.href = "https://www.google.com"; 
             } else {
-                alert("密码错误，请重试！");
+                alert("密码错误，访问被拒绝！");
             }
         }
 
-        // 支持回车提交
-        document.getElementById("passwordInput").addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                checkPassword();
-            }
+        // 监听回车键
+        document.getElementById('pw').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') verify();
         });
     </script>
 </body>
